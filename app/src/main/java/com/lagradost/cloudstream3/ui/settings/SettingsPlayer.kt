@@ -28,6 +28,10 @@ import com.lagradost.cloudstream3.utils.SingleSelectionHelper.showBottomDialog
 import com.lagradost.cloudstream3.utils.SingleSelectionHelper.showDialog
 import com.lagradost.cloudstream3.utils.SingleSelectionHelper.showMultiDialog
 import com.lagradost.cloudstream3.utils.UIHelper.hideKeyboard
+import androidx.media3.common.C
+import androidx.media3.exoplayer.audio.AudioCapabilities
+import androidx.appcompat.app.AlertDialog
+import androidx.media3.common.util.UnstableApi
 
 class SettingsPlayer : BasePreferenceFragmentCompat() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -319,6 +323,34 @@ class SettingsPlayer : BasePreferenceFragmentCompat() {
                 }
                 return@setOnPreferenceClickListener true
             }
+        }
+
+        @UnstableApi
+        getPref(R.string.audio_capability_check_key)?.setOnPreferenceClickListener { pref ->
+            val context = context ?: return@setOnPreferenceClickListener false
+            val capabilities = AudioCapabilities.getCapabilities(context)
+
+            val isAtmosSupported = capabilities.supportsEncoding(C.ENCODING_E_AC3_JOC) || capabilities.supportsEncoding(C.ENCODING_AC4)
+            val passthroughStatus = if (isAtmosSupported || capabilities.maxChannelCount > 2) getString(R.string.supported) else getString(R.string.not_supported)
+            val atmosStatus = if (isAtmosSupported) getString(R.string.supported) else getString(R.string.not_supported)
+
+            val message = StringBuilder()
+            message.append(getString(R.string.audio_passthrough_supported, passthroughStatus)).append("\n")
+            message.append(getString(R.string.audio_atmos_supported, atmosStatus)).append("\n\n")
+
+            message.append(getString(R.string.audio_encoding_ac3_joc)).append(": ")
+            message.append(if (capabilities.supportsEncoding(C.ENCODING_E_AC3_JOC)) getString(R.string.supported) else getString(R.string.not_supported)).append("\n")
+            
+            message.append(getString(R.string.audio_encoding_ac4)).append(": ")
+            message.append(if (capabilities.supportsEncoding(C.ENCODING_AC4)) getString(R.string.supported) else getString(R.string.not_supported))
+
+            AlertDialog.Builder(context, R.style.AlertDialogCustom)
+                .setTitle(R.string.audio_capabilities)
+                .setMessage(message.toString())
+                .setPositiveButton(R.string.ok) { dialog, _ -> dialog.dismiss() }
+                .show()
+
+            true
         }
     }
 }
