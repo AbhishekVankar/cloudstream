@@ -157,4 +157,6 @@
         <item quantity="one">@string/episode</item>
         <item quantity="other">@string/episodes</item>
     </plurals>
+    <string name="audio_passthrough_key">audio_passthrough_enabled</string>
+    <string name="audio_capability_check_key">audio_capability_check</string>
 </resources>

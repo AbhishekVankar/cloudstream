@@ -1083,19 +1083,16 @@ class CS3IPlayer : IPlayer {
                         else -> isLayout(PHONE or EMULATOR) to false
                     }
 
-                    val factory = if (isSoftwareDecodingEnabled) {
-                        FixedNextRenderersFactory(context).apply {
-                            setEnableDecoderFallback(true)
-                            setExtensionRendererMode(
-                                if (isSoftwareDecodingPreferred)
-                                    DefaultRenderersFactory.EXTENSION_RENDERER_MODE_PREFER
-                                else
-                                    DefaultRenderersFactory.EXTENSION_RENDERER_MODE_ON
-                            )
-                        }
-                    } else {
-                        // no nextlib = EXTENSION_RENDERER_MODE_OFF
-                        DefaultRenderersFactory(context)
+                    val factory = FixedNextRenderersFactory(context).apply {
+                        setEnableDecoderFallback(true)
+                        setExtensionRendererMode(
+                            if (!isSoftwareDecodingEnabled)
+                                DefaultRenderersFactory.EXTENSION_RENDERER_MODE_OFF
+                            else if (isSoftwareDecodingPreferred)
+                                DefaultRenderersFactory.EXTENSION_RENDERER_MODE_PREFER
+                            else
+                                DefaultRenderersFactory.EXTENSION_RENDERER_MODE_ON
+                        )
                     }
 
                     val style = CustomDecoder.style

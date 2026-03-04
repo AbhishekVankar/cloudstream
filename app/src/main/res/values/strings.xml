@@ -779,4 +779,15 @@
         <item quantity="one">%d download queued</item>
         <item quantity="other">%d downloads queued</item>
     </plurals>
+    <string name="audio_passthrough_settings">Audio passthrough</string>
+    <string name="audio_passthrough_settings_des">Enable audio passthrough (bitstream) for compatible devices and formats</string>
+    <string name="audio_capability_check">Check audio capabilities</string>
+    <string name="audio_capability_check_des">Check if your device supports Dolby Atmos and other high-quality audio formats</string>
+    <string name="audio_capabilities">Audio Capabilities</string>
+    <string name="audio_passthrough_supported">Audio Passthrough: %s</string>
+    <string name="audio_atmos_supported">Dolby Atmos: %s</string>
+    <string name="audio_encoding_ac3_joc">Dolby Digital Plus with Dolby Atmos (E-AC3 JOC)</string>
+    <string name="audio_encoding_ac4">Dolby AC-4</string>
+    <string name="supported">Supported</string>
+    <string name="not_supported">Not Supported</string>
 </resources>

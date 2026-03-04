@@ -128,6 +128,17 @@
             android:title="@string/extra_brightness_settings"
             app:defaultValue="false"
             app:key="@string/extra_brightness_key" />
+        <SwitchPreference
+            android:icon="@drawable/ic_baseline_volume_up_24"
+            android:summary="@string/audio_passthrough_settings_des"
+            android:title="@string/audio_passthrough_settings"
+            app:defaultValue="false"
+            app:key="@string/audio_passthrough_key" />
+        <Preference
+            android:icon="@drawable/ic_baseline_volume_up_24"
+            android:key="@string/audio_capability_check_key"
+            android:summary="@string/audio_capability_check_des"
+            android:title="@string/audio_capability_check" />
     </PreferenceCategory>
     <PreferenceCategory
         android:title="@string/pref_category_gestures"
